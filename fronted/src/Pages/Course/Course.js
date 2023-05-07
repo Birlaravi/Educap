@@ -7,10 +7,16 @@ const Course = () => {
   const [allcourse, setallcourse] = useState([]);
   const [newcourse, setcourse] = useState({ CourseName: "", Duration: "" });
   const getallcourse = async () => {
+    let a=[]
     const { data } = await axios.get(
       "http://localhost:4000/api/course/allcourse"
     );
-    setallcourse(data);
+    data.map((item) => {
+      if(item.CourseStatus!=="inactive"){
+        a.push(item);
+      }
+    })
+    setallcourse(a);
     console.log(data);
   };
   const handleAdd = async (e) => {

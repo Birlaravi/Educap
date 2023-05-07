@@ -1,8 +1,10 @@
 const jwt = require("jsonwebtoken");
-const router = require('express').Router();
-const Admin= require('../controller/AdminController')
+const router = require("express").Router();
+const Admin = require("../controller/AdminController");
 //router.use(express.json());
-router.get('/login', Admin.checkAdminLogin);
+router.post("/login", Admin.checkAdminLogin);
+router.post("/signup", Admin.createUser);
+router.post("/uploadImg",Admin.upload.single("photo"),Admin.imageUpload)
 /*router.post("/authallusers",varifyToken, (req, res) => {
     jwt.verify(req.token,"key",(err,authData)=>{
         if(err){

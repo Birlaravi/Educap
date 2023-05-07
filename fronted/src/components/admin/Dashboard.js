@@ -19,7 +19,7 @@ const Dashboard = () => {
     console.log(data);
   };
   const getallcareer = async () => {
-    const { data } = await axios.get("http://localhost:4000/api/career");
+    const { data } = await axios.get("http://localhost:4000/api/career/alljob");
     setcareer(data);
     console.log(data);
   };

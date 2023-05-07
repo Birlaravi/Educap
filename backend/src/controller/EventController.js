@@ -37,27 +37,21 @@ const singleEventName=async(req,res)=>{
 const createEvent = async(req,res)=>{
     //const data= req.params.eid; 
     try{
-        jwt.verify(req.token,"Admin Secretkey",(err,authData)=>{
-            if(err){
-                res.send({msg:"error"});
-            }
-            else{
-                // res.json({msg:"token found",authData});
-                // console.log("token is shown");
+       
           const data=
           {
             EventTitle:req.body.EventTitle,
             EventDate:req.body.EventDate, 
             EventDescription:req.body.EventDescription, 
             EventImage:req.body.EventImage, 
-            RegisteredUser:req.body.RegisteredUser
+            EventStatus:'active'
             };
 
            const result= new Event(data);
            const result1=result.save();
            res.status(201).json(`RESULT..${result}`);
-        } 
-    }); 
+        
+  
        }
 
          catch(error)
@@ -71,15 +65,10 @@ const createEvent = async(req,res)=>{
 const deleteEvent = async(req,res)=>{
         //const data=(req.params.cid)
       try{
-        jwt.verify(req.token,"Admin Secretkey",async(err,authData)=>{
-            if(err){
-                res.send({msg:"error"});
-            }
-            else{
-        const eventData = await Event.findByIdAndRemove(req.params.eid)
-        res.status(200).send("Remove data"); 
-            }
-        });
+       
+        const eventData = await Event.findByIdAndRemove(req.body._id)
+        res.status(200).json({eventData,msg:'data removed'})
+      
     }
       catch(error){
         res.status(500).send(error);
@@ -88,15 +77,10 @@ const deleteEvent = async(req,res)=>{
 
 const updateEvent = async(req,res)=>{
     try{
-        jwt.verify(req.token,"Admin Secretkey",async(err,authData)=>{
-            if(err){
-                res.send({msg:"error"});
-            }
-     else{
+        
             const eventdata =  await Event.findByIdAndUpdate(req.params.eid, req.body);
             res.status(200).json(eventdata);
-    }
-    });
+
 }
     catch(error){
         res.status(500).send(error);
